@@ -20,9 +20,21 @@ namespace SimpleHospitalSystem.Pages
             this.repository = repository;
         }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+            if (!await repository.IsInitializedAsync())
+            {
+                return RedirectToPage(pageName: "Initialize");
+            }
             Patients = await repository.GetPatientsAsync();
+            return Page();
         }
+
+        public async Task<IActionResult> OnPostResetAsync()
+        {
+            await repository.ResetInitializationAsync();
+            return RedirectToPage(pageName: "Initialize");
+        }
+
     }
 }

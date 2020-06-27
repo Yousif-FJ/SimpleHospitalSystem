@@ -1,0 +1,50 @@
+﻿@page
+@model SimpleHospitalSystem.Pages.InitializeModel
+@{
+    ViewData["Title"] = "Initialize";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h2>Initialize Hospital</h2>
+@if (Model.NumberOfDepartment == null)
+{
+    <form method="post">
+
+        <div class="form-group">
+            <label asp-for="NumberOfDepartment">Input number of departments</label>
+            <input asp-for="NumberOfDepartment" class="form-control" id="initializeHospitalInput"
+                   placeholder="Number of departments">
+            <span class="text-danger" asp-validation-for="NumberOfDepartment"></span>
+        </div>
+        <button asp-page-handler="Continue"  type="submit" class="btn btn-primary">Continue</button>
+    </form>
+}
+else
+{
+    <p>Input department names and number of beds</p>
+    <form method="post">
+        @for (int i = 0; i < Model.NumberOfDepartment; i++)
+        {
+            Model.DepartmentNameBedCountList.Add(new DepartmentNameBedCount());
+            <div class="form-group">
+                <div class="row pb-3">
+                    <div class="col">
+                        <label asp-for="DepartmentNameBedCountList[i].DepartmentName"></label>
+                        <input asp-for="DepartmentNameBedCountList[i].DepartmentName" class="form-control"
+                               placeholder="department name">
+                        <span class="text-danger" asp-validation-for="DepartmentNameBedCountList[i].DepartmentName"></span>
+                    </div>
+                    <div class="col">
+                        <label asp-for="DepartmentNameBedCountList[i].BedCount"></label>
+                        <input asp-for="DepartmentNameBedCountList[i].BedCount" class="form-control"
+                               placeholder="Number of departments">
+                        <span class="text-danger" asp-validation-for="DepartmentNameBedCountList[i].BedCount"></span>
+                    </div>
+                    <input asp-for="NumberOfDepartment" class="form-control"
+                           placeholder="Number of departments" hidden>
+                </div>
+            </div>
+        }
+        <button asp-page-handler="Initialize" type="submit" class="btn btn-primary">Continue</button>
+    </form>
+}
