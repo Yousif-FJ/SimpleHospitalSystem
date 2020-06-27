@@ -21,8 +21,16 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                        <li class="nav-item dropdown ml-auto">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Options
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <button type="button" class="dropdown-item" data-toggle="modal" data-target="#exampleModal">
+                                    Reset Initialization
+                                </button>
+
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -33,6 +41,33 @@
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Initialization Reset</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to reset initialization?<br />
+                    This action will delete all beds information and sections,
+                    admissioned patients will also be reset
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <form method="post">
+                        <button type="submit" class="btn btn-danger">
+                            Yes Delete them!
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <footer class="border-top footer text-muted">

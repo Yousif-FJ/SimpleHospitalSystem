@@ -5,21 +5,24 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using SimpleHospitalModel.DBModel;
+using SimpleHospitalModel.HospitalRepository;
 
 namespace SimpleHospitalSystem.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly IHospitalRepository repository;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IEnumerable<Patient> Patients { get; set; }
+        public IndexModel(IHospitalRepository repository)
         {
-            _logger = logger;
+            this.repository = repository;
         }
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-
+            Patients = await repository.GetPatientsAsync();
         }
     }
 }

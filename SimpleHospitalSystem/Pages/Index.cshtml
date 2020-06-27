@@ -3,8 +3,62 @@
 @{
     ViewData["Title"] = "Home page";
 }
+<div class="card-deck">
+    <div class="card border-primary mb-3">
+        <div class="card-header">Number of available beds</div>
+        <div class="card-body text-primary text-center">
+            <h2 class="card-title">30</h2>
+            <p class="card-text"></p>
+        </div>
+    </div>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div class="card border-primary mb-3">
+        <div class="card-header">Number of admissioned patients</div>
+        <div class="card-body text-primary text-center">
+            <h2 class="card-title">20</h2>
+            <p class="card-text"></p>
+        </div>
+    </div>
+
+    <div class="card border-primary mb-3">
+        <div class="card-header">Most crowded section</div>
+        <div class="card-body text-primary text-center">
+            <h2 class="card-title">surgery</h2>
+            <p class="card-text">80% of beds in surgery section are filled</p>
+        </div>
+    </div>
 </div>
+
+<h1>Patients list</h1>
+<a class="btn btn-primary btn-lg">New patient</a>
+
+@if (Model.Patients.Count() > 1)
+{
+    <table class="table mt-3 ">
+
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Age</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var patient in Model.Patients)
+            {
+                <tr>
+                    <th scope="row">1</th>
+                    <td>@patient.Name</td>
+                    <td>@patient.Age</td>
+                    <td>
+                        <a class="btn btn-link">Open Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>}
+else
+{
+    <h3 class="mt-1">No Patients have been added yet</h3>
+}
