@@ -14,5 +14,6 @@ namespace SimpleHospitalModel.HospitalRepository
         Task InitializeAsync(IEnumerable<(string,long)> DepartmentNameBedCountTuples);
         Task ResetInitializationAsync();
         Task<bool> IsInitializedAsync();
+        Task<(int AvailableBeds, int AdmissionedPatients,string CrowdedDepartment, float FilledPercentage)> GetStatusAsync();
     }
 }

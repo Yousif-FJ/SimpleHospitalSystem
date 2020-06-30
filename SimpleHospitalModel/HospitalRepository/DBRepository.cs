@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
 using SimpleHospitalModel.DBModel;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,26 @@ namespace SimpleHospitalModel.HospitalRepository
         {
             var returnList = await hospitalContext.Patients.ToListAsync();
             return returnList;
+        }
+
+        public async Task<(int AvailableBeds, int AdmissionedPatients, string CrowdedDepartment, float FilledPercentage)> GetStatusAsync()
+        {
+            var availableBeds = await hospitalContext.Beds.CountAsync(bed => !bed.IsOccupied);
+            var admissionedPatients = await hospitalContext.Beds.CountAsync(bed => bed.IsOccupied);
+
+
+            var departmentAndOccupiedBedCount = await hospitalContext.Department
+                .Include(department => department.Beds)
+                .Select(department => new { department, count = department.Beds.Count(b => b.IsOccupied) }).ToListAsync();
+
+
+            var crowdedDepartment = departmentAndOccupiedBedCount.FirstOrDefault(
+            a => a.count == departmentAndOccupiedBedCount.Max(a => a.count));
+
+
+            float filledPercentage = crowdedDepartment.count / crowdedDepartment.department.Beds.Count;
+
+            return (availableBeds, admissionedPatients, crowdedDepartment.department.Name, filledPercentage);
         }
 
         public async Task InitializeAsync(IEnumerable<(string, long)> departmentNameBedCountTupleList)
