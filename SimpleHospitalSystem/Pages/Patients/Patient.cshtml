@@ -1,0 +1,39 @@
+﻿@page
+@model PatientModel
+@{
+    ViewData["Title"] = "Patient";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h2>Patient Data</h2>
+<h3>Name: @Model.Patient.Name</h3>
+<h3>Age : @Model.Patient.Age </h3>
+
+
+<a class="btn btn-primary" asp-page="NewAdmission" asp-route-id="@Model.Patient.Id">Admission</a>
+<hr />
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+
+            <th scope="col">Cheif Complaint</th>
+            <th scope="col">Date</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var clinicalData in Model.Patient.ClinicalData)
+        {
+            <tr>
+                <td>@clinicalData.ChiefComplaint</td>
+                <td>@clinicalData.DateTime</td>
+                <td>
+                    <a class="btn btn-primary" asp-page="ClinicalData" asp-route-id="@clinicalData.Id">View Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

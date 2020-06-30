@@ -18,8 +18,4 @@
     <ProjectReference Include="..\SimpleHospitalModel\SimpleHospitalModel.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\Patient\" />
-  </ItemGroup>
-
 </Project>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.Extensions.Logging;
 using SimpleHospitalModel.DBModel;
 using SimpleHospitalModel.HospitalRepository;
@@ -15,6 +16,10 @@ namespace SimpleHospitalSystem.Pages
         private readonly IHospitalRepository repository;
 
         public IEnumerable<Patient> Patients { get; set; }
+        public long AdmissionedPatients { get; set; }
+        public long AvailableBeds { get; set; }
+        public string CrowdedDepartment { get; set; }
+        public float? FilledPercentage { get; set; }
         public IndexModel(IHospitalRepository repository)
         {
             this.repository = repository;
@@ -27,6 +32,13 @@ namespace SimpleHospitalSystem.Pages
                 return RedirectToPage(pageName: "Initialize");
             }
             Patients = await repository.GetPatientsAsync();
+            var status = await repository.GetStatusAsync();
+            AdmissionedPatients = status.AdmissionedPatients;
+            AvailableBeds = status.AvailableBeds;
+            if (status.FilledPercentage == 0)
+            {
+                CrowdedDepartment = "None";
+            }
             return Page();
         }
 
