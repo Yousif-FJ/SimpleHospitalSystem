@@ -11,6 +11,7 @@ namespace SimpleHospitalModel.DBModel
         [Key]
         public long Id { get; set; }
         [MaxLength(64)]
+        [Required]
         public string Name { get; set; }
         public int Age { get; set; }
         public ICollection<ClinicalData> ClinicalData { get; set; }

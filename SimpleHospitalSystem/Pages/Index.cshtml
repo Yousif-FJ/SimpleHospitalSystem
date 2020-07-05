@@ -37,7 +37,7 @@
 </div>
 
 <h1>Patients list</h1>
-<a class="btn btn-primary btn-lg">New patient</a>
+<a asp-page="Patients/AddPatient" class="btn btn-primary btn-lg">New patient</a>
 
 @if (Model.Patients.Count() > 1)
 {
