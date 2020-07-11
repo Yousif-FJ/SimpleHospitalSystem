@@ -25,6 +25,11 @@ namespace SimpleHospitalModel.HospitalRepository
             return returnEntity.Entity;
         }
 
+        public async Task<IList<Department>> GetDepartmentsAsync()
+        {
+            return await hospitalContext.Department.ToListAsync();
+        }
+
         public async Task<Patient> GetPatientDetailsAsync(long patientId)
         {
             var returnPatient = await hospitalContext.Patients

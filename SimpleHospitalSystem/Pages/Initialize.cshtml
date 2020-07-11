@@ -16,7 +16,7 @@
                    placeholder="Number of departments">
             <span class="text-danger" asp-validation-for="NumberOfDepartment"></span>
         </div>
-        <button asp-page-handler="Continue"  type="submit" class="btn btn-primary">Continue</button>
+        <button asp-page-handler="Continue" type="submit" class="btn btn-primary">Continue</button>
     </form>
 }
 else
@@ -47,4 +47,7 @@ else
         }
         <button asp-page-handler="Initialize" type="submit" class="btn btn-primary">Continue</button>
     </form>
+}
+@section Script{
+    <partial name="_ValidationScriptsPartial" />
 }
