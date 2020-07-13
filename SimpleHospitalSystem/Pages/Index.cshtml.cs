@@ -18,8 +18,6 @@ namespace SimpleHospitalSystem.Pages
         public IEnumerable<Patient> Patients { get; set; }
         public long AdmissionedPatients { get; set; }
         public long AvailableBeds { get; set; }
-        public string CrowdedDepartment { get; set; }
-        public float? FilledPercentage { get; set; }
         public IndexModel(IHospitalRepository repository)
         {
             this.repository = repository;
@@ -35,10 +33,6 @@ namespace SimpleHospitalSystem.Pages
             var status = await repository.GetStatusAsync();
             AdmissionedPatients = status.AdmissionedPatients;
             AvailableBeds = status.AvailableBeds;
-            if (status.FilledPercentage == 0)
-            {
-                CrowdedDepartment = "None";
-            }
             return Page();
         }
 

@@ -23,15 +23,8 @@
     <div class="card border-primary mb-3">
         <div class="card-header">Most crowded section</div>
         <div class="card-body text-primary text-center">
-            <h2 class="card-title">@Model.CrowdedDepartment</h2>
-            @if (Model.FilledPercentage == null)
-            {
-                <p class="card-text">All departments are empty</p>
-            }
-            else
-            {
-                <p class="card-text">@Model.FilledPercentage% of beds in surgery section are filled</p>
-            }
+            <h2 class="card-title">Departments</h2>
+
         </div>
     </div>
 </div>
@@ -67,7 +60,7 @@
     </table>}
 else
 {
-    <h3 class="mt-1">No Patients have been added yet</h3>
+    <h4 class="mt-1">No Patients have been added yet</h4>
 }
 
 
