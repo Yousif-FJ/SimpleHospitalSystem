@@ -11,10 +11,13 @@ namespace SimpleHospitalModel.HospitalRepository
         Task<IEnumerable<Patient>> GetPatientsAsync();
         Task<Patient> GetPatientDetailsAsync(long patientId);
         Task<Patient> AddPatientAsync(Patient patient);
-        Task InitializeAsync(IEnumerable<(string,long)> DepartmentNameBedCountTuples);
+        Task InitializeAsync(IEnumerable<(string,long)> departmentNameBedCountTuples);
         Task ResetInitializationAsync();
         Task<bool> IsInitializedAsync();
-        Task<(int AvailableBeds, int AdmissionedPatients,string CrowdedDepartment, float FilledPercentage)> GetStatusAsync();
+        Task<(int AvailableBeds, int AdmissionedPatients)> GetStatusAsync();
         Task<IList<Department>> GetDepartmentsAsync();
+        Task<ClinicalData> AddClinicalDataAsync(ClinicalData clinicalData);
+        Task NewAdmissionAsync(long patientId, long departmentId, string bedNumber, string roomNumber);
+        Task<ClinicalData> GetClinicalDataAsync(long clinicalDataId);
     }
 }

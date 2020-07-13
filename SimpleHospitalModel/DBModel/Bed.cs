@@ -15,7 +15,6 @@ namespace SimpleHospitalModel.DBModel
         [MaxLength(32)]
         public string BedNumber { get; set; }
         public Patient Patient { get; set; }
-        public bool IsOccupied { get; set; }
         public Department Department { get; set; }
         public long DepartmentId { get; set; }
     }
