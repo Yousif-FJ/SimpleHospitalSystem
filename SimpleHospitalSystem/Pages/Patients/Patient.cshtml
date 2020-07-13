@@ -5,14 +5,35 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h2>Patient Data</h2>
-<h3>Name: @Model.Patient.Name</h3>
-<h3>Age : @Model.Patient.Age </h3>
-
-
-<a class="btn btn-primary" asp-page="NewAdmission" asp-route-id="@Model.Patient.Id">Admission</a>
+<h3>Patient Data</h3>
 <hr />
+<h4><span class="text-muted">Name:</span> @Model.Patient.Name</h4>
+<h4><span class="text-muted">Age:</span> @Model.Patient.Age </h4>
 
+<hr />
+@if (Model.Patient.Bed == null)
+{
+    <a class="btn btn-primary" asp-page="NewAdmission" asp-route-id="@Model.Patient.Id">Admission</a>
+}
+else
+{
+    <div class="card" style="width: 24rem;">
+        <div class="card-body">
+            <h5 class="card-title">Admission Detail</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Patient is staying in the hospital in :</h6>
+            <p class="card-text"><span class="text-muted">Department: </span>@Model.Patient.Bed.Department.Name</p>
+            <p class="card-text"><span class="text-muted">Room: </span>@Model.Patient.Bed.RoomNumber</p>
+            <p class="card-text"><span class="text-muted">Bed: </span>@Model.Patient.Bed.BedNumber</p>
+            <a href="#" class="card-link">Released</a>
+        </div>
+    </div>
+}
+<hr />
+<a class="btn btn-primary mb-2" asp-page="ClinicalData" asp-route-patientId="@Model.Patient.Id">Add clinical data</a>
+
+
+@if (Model.Patient.ClinicalData.Count>0)
+{
 <table class="table">
     <thead class="thead-dark">
         <tr>
@@ -35,5 +56,8 @@
         }
     </tbody>
 </table>
-
-
+}
+else
+{
+    <h5>No Clinical data have been addded yet</h5>
+}
