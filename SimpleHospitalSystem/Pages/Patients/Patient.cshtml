@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Patient";
     Layout = "~/Pages/Shared/_Layout.cshtml";
+    var patientId = Model.Patient.Id;
 }
 
 <h3>Patient Data</h3>
@@ -24,7 +25,10 @@ else
             <p class="card-text"><span class="text-muted">Department: </span>@Model.Patient.Bed.Department.Name</p>
             <p class="card-text"><span class="text-muted">Room: </span>@Model.Patient.Bed.RoomNumber</p>
             <p class="card-text"><span class="text-muted">Bed: </span>@Model.Patient.Bed.BedNumber</p>
-            <a href="#" class="card-link">Released</a>
+            <form method="post">
+                <input asp-for="@patientId" hidden/>
+                <button asp-page="NewAdmission" asp-page-handler="Release" type="submit" class="btn btn-link card-link">Release</button>
+            </form>
         </div>
     </div>
 }

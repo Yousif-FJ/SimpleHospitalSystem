@@ -117,6 +117,23 @@ namespace SimpleHospitalModel.HospitalRepository
             await hospitalContext.SaveChangesAsync();
         }
 
+        public async Task ReleaseAdmission(long patientId)
+        {
+            var patient = await hospitalContext.Patients
+                .Include(patient => patient.Bed)
+                .FirstOrDefaultAsync(patient => patient.Id == patientId);
+            if (patient != null && patient.Bed != null)
+            {
+                var bed = patient.Bed;
+                bed.BedNumber = null;
+                bed.RoomNumber = null;
+                patient.BedId = null;
+                hospitalContext.Beds.Update(bed);
+                hospitalContext.Patients.Update(patient);
+                await hospitalContext.SaveChangesAsync();
+            }
+        }
+
         public async Task ResetInitializationAsync()
         {
             hospitalContext.Beds.RemoveRange(hospitalContext.Beds);

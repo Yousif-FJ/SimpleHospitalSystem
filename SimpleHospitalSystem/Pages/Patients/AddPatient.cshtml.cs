@@ -30,7 +30,7 @@ namespace SimpleHospitalSystem.Pages.Patients
             if (ModelState.IsValid)
             {
                 await repository.AddPatientAsync(Patient);
-                return RedirectToPage("/Index");
+                return RedirectToPage("Patient", new { Id = Patient.Id });
             }
             return Page();
         }
