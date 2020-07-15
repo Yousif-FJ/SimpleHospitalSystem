@@ -42,6 +42,11 @@ namespace SimpleHospitalModel.HospitalRepository
             return await hospitalContext.Department.ToListAsync();
         }
 
+        public async Task<IList<Department>> GetDepartmentsWithBedAsync()
+        {
+            return await hospitalContext.Department.Include(department => department.Beds).ToListAsync();
+        }
+
         public async Task<Patient> GetPatientDetailsAsync(long patientId)
         {
             var returnPatient = await hospitalContext.Patients
@@ -52,10 +57,16 @@ namespace SimpleHospitalModel.HospitalRepository
             return returnPatient;
         }
 
-        public async Task<IEnumerable<Patient>> GetPatientsAsync()
+        public async Task<IEnumerable<Patient>> GetPatientsAsync(string search = null)
         {
-            var returnList = await hospitalContext.Patients.ToListAsync();
-            return returnList;
+            if (string.IsNullOrEmpty(search))
+            {
+                return await hospitalContext.Patients.Take(100).ToListAsync();
+            }
+            else
+            {
+                return await hospitalContext.Patients.Take(100).Where(p => p.Name.Contains(search)).ToListAsync();
+            }
         }
 
         public async Task<(int AvailableBeds, int AdmissionedPatients)> GetStatusAsync()
@@ -98,23 +109,28 @@ namespace SimpleHospitalModel.HospitalRepository
             }
         }
 
-        public async Task NewAdmissionAsync(long patientId, long departmentId, string bedNumber, string roomNumber)
+        public async Task<bool> NewAdmissionAsync(long patientId, long departmentId, string bedNumber, string roomNumber)
         {
             var patient = await hospitalContext.Patients
                 .Include(patient => patient.Bed)
                 .FirstOrDefaultAsync(patient => patient.Id == patientId);
             if (patient.Bed != null)
             {
-                throw new InvalidOperationException("Patient is already admissioned");
+                return false;
             }
             var bed = await hospitalContext.Beds.FirstOrDefaultAsync(
                 bed => bed.Patient == null && bed.DepartmentId == departmentId);
+            if (bed == null)
+            {
+                return false;
+            }
             bed.BedNumber = bedNumber;
             bed.RoomNumber = roomNumber;
             patient.BedId = bed.Id;
             hospitalContext.Patients.Update(patient);
             hospitalContext.Beds.Update(bed);
             await hospitalContext.SaveChangesAsync();
+            return true;
         }
 
         public async Task ReleaseAdmission(long patientId)

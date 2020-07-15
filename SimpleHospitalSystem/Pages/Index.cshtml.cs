@@ -18,18 +18,19 @@ namespace SimpleHospitalSystem.Pages
         public IEnumerable<Patient> Patients { get; set; }
         public long AdmissionedPatients { get; set; }
         public long AvailableBeds { get; set; }
+        public string SearchTerm { get; set; }
         public IndexModel(IHospitalRepository repository)
         {
             this.repository = repository;
         }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(string searchTerm = null)
         {
             if (!await repository.IsInitializedAsync())
             {
                 return RedirectToPage(pageName: "Initialize");
             }
-            Patients = await repository.GetPatientsAsync();
+            Patients = await repository.GetPatientsAsync(searchTerm);
             var status = await repository.GetStatusAsync();
             AdmissionedPatients = status.AdmissionedPatients;
             AvailableBeds = status.AvailableBeds;

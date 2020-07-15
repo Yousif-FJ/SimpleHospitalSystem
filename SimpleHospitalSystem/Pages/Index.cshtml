@@ -29,7 +29,18 @@
     </div>
 </div>
 
-<h1>Patients list</h1>
+<h2>Patients list</h2>
+<p>Viewing 100 patient max, use search to narrow down the list</p>
+
+<form method="get">
+    <div class="input-group mb-3">
+        <input class="form-control" asp-for="SearchTerm" />
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </div>
+</form>
+
 <a asp-page="Patients/AddPatient" class="btn btn-primary btn-lg">New patient</a>
 
 @if (Model.Patients.Count() > 1)
@@ -60,7 +71,7 @@
     </table>}
 else
 {
-    <h4 class="mt-1">No Patients have been added yet</h4>
+    <h4 class="mt-1">No Patients found</h4>
 }
 
 
