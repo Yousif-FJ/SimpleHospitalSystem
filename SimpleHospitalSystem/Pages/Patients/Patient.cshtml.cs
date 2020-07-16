@@ -22,6 +22,10 @@ namespace SimpleHospitalSystem.Pages.Patients
         public async Task<IActionResult> OnGetAsync(long Id)
         {
             Patient = await repository.GetPatientDetailsAsync(Id);
+            if (Patient == null)
+            {
+                return NotFound();
+            }
             return Page();
         }
     }

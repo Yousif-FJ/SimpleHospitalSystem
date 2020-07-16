@@ -46,6 +46,10 @@ namespace SimpleHospitalSystem.Pages.Patients
             else
             {
                 ClinicalData = await repository.GetClinicalDataAsync(clinicalDataId.Value);
+                if (ClinicalData == null)
+                {
+                    return NotFound();
+                }
             }
             return Page();
         }

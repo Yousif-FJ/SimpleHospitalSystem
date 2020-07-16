@@ -1,0 +1,13 @@
+﻿@page
+@model SimpleHospitalSystem.Pages.StatusCodeModel
+@{
+    ViewData["Title"] = "StatusCode";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-danger">Error</h1>
+<h2 class="text-danger">Status code @Model.Code</h2>
+@if (Model.Code == 404)
+{
+    <h4>Requested resource is not found</h4>
+}
