@@ -54,7 +54,7 @@ else
                 <td>@clinicalData.ChiefComplaint</td>
                 <td>@clinicalData.DateTime</td>
                 <td>
-                    <a class="btn btn-primary" asp-page="ClinicalData" asp-route-id="@clinicalData.Id">View Details</a>
+                    <a class="btn btn-link" asp-page="ClinicalData" asp-route-patientId="@clinicalData.PatientId" asp-route-clinicalDataId="@clinicalData.Id">View Details</a>
                 </td>
             </tr>
         }

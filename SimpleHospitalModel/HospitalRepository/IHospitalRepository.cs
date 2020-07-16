@@ -18,6 +18,7 @@ namespace SimpleHospitalModel.HospitalRepository
         Task<IList<Department>> GetDepartmentsAsync();
         Task<IList<Department>> GetDepartmentsWithBedAsync();
         Task<ClinicalData> AddClinicalDataAsync(ClinicalData clinicalData);
+        Task<ClinicalData> UpdateClinicalDataAsync(ClinicalData clinicalData);
         Task<bool> NewAdmissionAsync(long patientId, long departmentId, string bedNumber, string roomNumber);
         Task<ClinicalData> GetClinicalDataAsync(long clinicalDataId);
         Task ReleaseAdmission(long patientId);

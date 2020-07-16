@@ -20,7 +20,19 @@ namespace SimpleHospitalModel.HospitalRepository
 
         public async Task<ClinicalData> AddClinicalDataAsync(ClinicalData clinicalData)
         {
+            var patient = await hospitalContext.Patients.FindAsync(clinicalData.PatientId);
+            if (patient == null)
+            {
+                return null;
+            }
             var returnEntity = await hospitalContext.ClinicalInfomations.AddAsync(clinicalData);
+            await hospitalContext.SaveChangesAsync();
+            return returnEntity.Entity;
+        }
+
+        public async Task<ClinicalData> UpdateClinicalDataAsync(ClinicalData clinicalData)
+        {
+            var returnEntity = hospitalContext.ClinicalInfomations.Update(clinicalData);
             await hospitalContext.SaveChangesAsync();
             return returnEntity.Entity;
         }
