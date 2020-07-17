@@ -29,13 +29,13 @@ else
             <div class="form-group">
                 <div class="row pb-3">
                     <div class="col">
-                        <label asp-for="DepartmentNameBedCountList[i].DepartmentName"></label>
+                        <label asp-for="DepartmentNameBedCountList[i].DepartmentName">Input department name</label>
                         <input asp-for="DepartmentNameBedCountList[i].DepartmentName" class="form-control"
                                placeholder="department name">
                         <span class="text-danger" asp-validation-for="DepartmentNameBedCountList[i].DepartmentName"></span>
                     </div>
                     <div class="col">
-                        <label asp-for="DepartmentNameBedCountList[i].BedCount"></label>
+                        <label asp-for="DepartmentNameBedCountList[i].BedCount">Input Bed count</label>
                         <input asp-for="DepartmentNameBedCountList[i].BedCount" class="form-control"
                                placeholder="Number of departments">
                         <span class="text-danger" asp-validation-for="DepartmentNameBedCountList[i].BedCount"></span>
