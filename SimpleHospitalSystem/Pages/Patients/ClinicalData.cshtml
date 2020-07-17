@@ -9,17 +9,21 @@
 <form method="post">
     <div class="form-group">
         <label asp-for="ClinicalData.ChiefComplaint">Chief complaint</label>
-        <input readonly class="form-control input-elements" asp-for="ClinicalData.ChiefComplaint" />
+        <input placeholder="The primary problem of the patient that led the patient to seek medical attention"
+               readonly class="form-control input-elements" asp-for="ClinicalData.ChiefComplaint" />
         <span class="text-danger" asp-validation-for="ClinicalData.ChiefComplaint"></span>
     </div>
     <div class="form-group">
         <label asp-for="ClinicalData.History">History</label>
-        <textarea readonly class="form-control input-elements" asp-for="ClinicalData.History"></textarea>
+        <textarea placeholder="A record of information about a person’s health.
+it may include information about allergies, illnesses, surgeries, immunizations, and results of physical exams and tests"
+                  readonly class="form-control input-elements" asp-for="ClinicalData.History"></textarea>
         <span class="text-danger" asp-validation-for="ClinicalData.History"></span>
     </div>
     <div class="form-group">
         <label asp-for="ClinicalData.Diagnosis">Diagnosis</label>
-        <textarea readonly class="form-control input-elements" asp-for="ClinicalData.Diagnosis"></textarea>
+        <textarea placeholder="Diagnosis or type of treatment the patient got"
+                  readonly class="form-control input-elements" asp-for="ClinicalData.Diagnosis"></textarea>
         <span class="text-danger" asp-validation-for="ClinicalData.Diagnosis"></span>
     </div>
     <input asp-for="ClinicalData.PatientId" hidden />
@@ -47,7 +51,7 @@
             const InputElements = document.getElementsByClassName("input-elements");
             function EnableEditMode() {
                 if (EditEnable) {
-                    UpdatedButton.setAttribute("hidden","true");
+                    UpdatedButton.setAttribute("hidden", "true");
                     for (var i = 0; i < InputElements.length; i++) {
                         InputElements[i].setAttribute("readonly", "true");
                     }

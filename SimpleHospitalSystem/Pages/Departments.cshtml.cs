@@ -18,9 +18,14 @@ namespace SimpleHospitalSystem.Pages
             this.repository = repository;
         }
         public IList<Department> Departments { get; set; } 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+            if (!await repository.IsInitializedAsync())
+            {
+                return RedirectToPage(pageName: "Initialize");
+            }
             Departments = await repository.GetDepartmentsWithBedAsync();
+            return Page();
         }
     }
 }
