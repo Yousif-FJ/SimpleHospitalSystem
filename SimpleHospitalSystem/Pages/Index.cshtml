@@ -13,7 +13,7 @@
     </div>
 
     <div class="card border-primary mb-3">
-        <div class="card-header">Number of admissioned patients</div>
+        <div class="card-header">Number of occupied beds</div>
         <div class="card-body text-primary text-center">
             <h2 class="card-title">@Model.AdmissionedPatients</h2>
             <p class="card-text"></p>
@@ -21,9 +21,9 @@
     </div>
 
     <div class="card border-primary mb-3">
-        <div class="card-header">Most crowded section</div>
+        <div class="card-header">Departments</div>
         <div class="card-body text-primary text-center">
-            <h2 class="card-title">Departments</h2>
+            <p class="card-text">click on department tab to see department status</p>
 
         </div>
     </div>
@@ -49,8 +49,7 @@
 
         <thead class="thead-dark">
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
+                <th scope="col">Patient name</th>
                 <th scope="col">Age</th>
                 <th scope="col"></th>
             </tr>
@@ -59,7 +58,6 @@
             @foreach (var patient in Model.Patients)
             {
                 <tr>
-                    <th scope="row">1</th>
                     <td>@patient.Name</td>
                     <td>@patient.Age</td>
                     <td>

@@ -1,0 +1,29 @@
+﻿@page
+@model SimpleHospitalSystem.Pages.DepartmentsModel
+@{
+    ViewData["Title"] = "Departments";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Departments</h1>
+<div class="row row-cols-3">
+    @foreach (var department in Model.Departments)
+    {
+        <div class="col">
+            <div class="mb-4 card">
+                <div class="card-body" style="width:16em">
+                    <h5 class="card-title">@department.Name</h5>
+                    <p class="card-text">
+                        <span class="card-text text-muted">Available beds :</span>
+                        @department.Beds.Count(bed => bed.Patient == null)
+                    </p>
+                    <p class="card-text">
+                        <span class="card-text text-muted">Occupied beds :</span>
+                        @department.Beds.Count(bed => bed.Patient != null)
+                    </p>
+
+                </div>
+            </div>
+        </div>
+        }
+</div>
