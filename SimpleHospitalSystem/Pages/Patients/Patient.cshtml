@@ -11,6 +11,7 @@
 <h4><span class="text-muted">Name:</span> @Model.Patient.Name</h4>
 <h4><span class="text-muted">Age:</span> @Model.Patient.Age </h4>
 
+<a class="btn btn-primary mt-2" asp-page="AddPatient" asp-route-id="@Model.Patient.Id">Edit</a>
 <hr />
 @if (Model.Patient.Bed == null)
 {
@@ -18,16 +19,25 @@
 }
 else
 {
-    <div class="card" style="width: 24rem;">
+    <div class="card" style="width: 20rem;">
         <div class="card-body">
             <h5 class="card-title">Admission Detail</h5>
             <h6 class="card-subtitle mb-2 text-muted">Patient is staying in the hospital in :</h6>
-            <p class="card-text"><span class="text-muted">Department: </span>@Model.Patient.Bed.Department.Name</p>
-            <p class="card-text"><span class="text-muted">Room: </span>@Model.Patient.Bed.RoomNumber</p>
-            <p class="card-text"><span class="text-muted">Bed: </span>@Model.Patient.Bed.BedNumber</p>
+            <div class="row">
+                <p class="col mb-0 text-muted">Department: </p>
+                <p class="col mb-0">@Model.Patient.Bed.Department.Name</p>
+            </div>
+            <div class="row">
+                <p class="col mb-0 text-muted">Room: </p>
+                <p class="col mb-0">@(Model.Patient.Bed.RoomNumber?? "null")</p>
+            </div>
+            <div class="row">
+                <p class="col mb-0 text-muted">Bed: </p>
+                <p class="col mb-0">@(Model.Patient.Bed.BedNumber?? "null")</p>
+            </div>
             <form method="post">
-                <input asp-for="@patientId" hidden/>
-                <button asp-page="NewAdmission" asp-page-handler="Release" type="submit" class="btn btn-link card-link">Release</button>
+                <input asp-for="@patientId" hidden />
+                <button asp-page="NewAdmission" asp-page-handler="Release" type="submit" class="btn btn-primary mt-2">Release</button>
             </form>
         </div>
     </div>
@@ -36,30 +46,30 @@ else
 <a class="btn btn-primary mb-2" asp-page="ClinicalData" asp-route-patientId="@Model.Patient.Id">Add clinical data</a>
 
 
-@if (Model.Patient.ClinicalData.Count>0)
+@if (Model.Patient.ClinicalData.Count > 0)
 {
-<table class="table">
-    <thead class="thead-dark">
-        <tr>
-
-            <th scope="col">Cheif Complaint</th>
-            <th scope="col">Date</th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var clinicalData in Model.Patient.ClinicalData)
-        {
+    <table class="table">
+        <thead class="thead-dark">
             <tr>
-                <td>@clinicalData.ChiefComplaint</td>
-                <td>@clinicalData.DateTime</td>
-                <td>
-                    <a class="btn btn-link" asp-page="ClinicalData" asp-route-patientId="@clinicalData.PatientId" asp-route-clinicalDataId="@clinicalData.Id">View Details</a>
-                </td>
+
+                <th scope="col">Cheif Complaint</th>
+                <th scope="col">Date</th>
+                <th scope="col"></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var clinicalData in Model.Patient.ClinicalData)
+            {
+                <tr>
+                    <td>@(clinicalData.ChiefComplaint?? "null")</td>
+                    <td>@clinicalData.DateTime</td>
+                    <td>
+                        <a class="btn btn-link" asp-page="ClinicalData" asp-route-patientId="@clinicalData.PatientId" asp-route-clinicalDataId="@clinicalData.Id">View Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 else
 {

@@ -20,17 +20,38 @@ namespace SimpleHospitalSystem.Pages.Patients
 
         [BindProperty]
         public Patient Patient { get; set; }
-        public void OnGet()
-        {
 
+        public async Task<IActionResult> OnGetAsync(long? id = null)
+        {
+            if (id == null)
+            {
+                return Page();
+            }
+            var patient = await repository.GetPatientAsync(id.Value);
+            if (patient == null)
+            {
+                return NotFound();
+            }
+            Patient = patient;
+            return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAddAsync()
         {
             if (ModelState.IsValid)
             {
                 await repository.AddPatientAsync(Patient);
-                return RedirectToPage("Patient", new { Id = Patient.Id });
+                return RedirectToPage("Patient", new { Patient.Id });
+            }
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostUpdateAsync()
+        {
+            if (ModelState.IsValid)
+            {
+                await repository.UpdatePatientAsync(Patient);
+                return RedirectToPage("Patient", new { Patient.Id });
             }
             return Page();
         }

@@ -4,8 +4,15 @@
     ViewData["Title"] = "NewPatient";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+@if (Model.Patient == null)
+{
+    <h1>Add patient</h1>
+}
+else
+{
+    <h1>Edit patient</h1>
+}
 
-<h1>Add patient</h1>
 <form method="post">
     <div class="form-group">
         <label asp-for="Patient.Name">Input patient name</label>
@@ -18,8 +25,16 @@
         <input class="form-control" asp-for="Patient.Age" />
         <span class="text-danger" asp-validation-for="Patient.Age"></span>
     </div>
-
-    <button class="btn btn-primary" type="submit" asp-page="AddPatient">Ok</button>
+    <input hidden asp-for="Patient.Id"/>
+    <input hidden asp-for="Patient.BedId" />
+    @if (Model.Patient == null)
+    {
+        <button class="btn btn-primary" type="submit" asp-page-handler="Add" asp-page="AddPatient">Ok</button>
+    }
+    else
+    {
+        <button class="btn btn-primary" type="submit" asp-page-handler="Update" asp-page="AddPatient">Ok</button>
+    }
 </form>
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />
