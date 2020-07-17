@@ -10,7 +10,9 @@ namespace SimpleHospitalModel.HospitalRepository
     {
         Task<IEnumerable<Patient>> GetPatientsAsync(string search = null);
         Task<Patient> GetPatientDetailsAsync(long patientId);
+        Task<Patient> GetPatientAsync(long patientId);
         Task<Patient> AddPatientAsync(Patient patient);
+        Task<Patient> UpdatePatientAsync(Patient patient);
         Task InitializeAsync(IEnumerable<(string,long)> departmentNameBedCountTuples);
         Task ResetInitializationAsync();
         Task<bool> IsInitializedAsync();

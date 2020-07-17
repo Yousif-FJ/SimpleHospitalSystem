@@ -20,6 +20,7 @@ namespace SimpleHospitalModel.HospitalRepository
 
         public async Task<ClinicalData> AddClinicalDataAsync(ClinicalData clinicalData)
         {
+            clinicalData.Id = 0;
             var patient = await hospitalContext.Patients.FindAsync(clinicalData.PatientId);
             if (patient == null)
             {
@@ -32,6 +33,10 @@ namespace SimpleHospitalModel.HospitalRepository
 
         public async Task<ClinicalData> UpdateClinicalDataAsync(ClinicalData clinicalData)
         {
+            if (clinicalData.Id == 0)
+            {
+                return null;
+            }
             var returnEntity = hospitalContext.ClinicalInfomations.Update(clinicalData);
             await hospitalContext.SaveChangesAsync();
             return returnEntity.Entity;
@@ -39,6 +44,7 @@ namespace SimpleHospitalModel.HospitalRepository
 
         public async Task<Patient> AddPatientAsync(Patient patient)
         {
+            patient.Id = 0;
             var returnEntity = await hospitalContext.Patients.AddAsync(patient);
             await hospitalContext.SaveChangesAsync();
             return returnEntity.Entity;
@@ -56,7 +62,10 @@ namespace SimpleHospitalModel.HospitalRepository
 
         public async Task<IList<Department>> GetDepartmentsWithBedAsync()
         {
-            return await hospitalContext.Department.Include(department => department.Beds).ToListAsync();
+            return await hospitalContext.Department
+                .Include(department => department.Beds)
+                .ThenInclude(bed => bed.Patient)
+                .ToListAsync();
         }
 
         public async Task<Patient> GetPatientDetailsAsync(long patientId)
@@ -167,6 +176,22 @@ namespace SimpleHospitalModel.HospitalRepository
             hospitalContext.Beds.RemoveRange(hospitalContext.Beds);
             hospitalContext.Department.RemoveRange(hospitalContext.Department);
             await hospitalContext.SaveChangesAsync();
+        }
+
+        public async Task<Patient> GetPatientAsync(long patientId)
+        {
+            return await hospitalContext.Patients.FindAsync(patientId);
+        }
+
+        public async Task<Patient> UpdatePatientAsync(Patient patient)
+        {
+            var returnEntity = hospitalContext.Patients.Update(patient);
+            if (patient.Id == 0)
+            {
+                return null;
+            }
+            await hospitalContext.SaveChangesAsync();
+            return returnEntity.Entity;
         }
     }
 }

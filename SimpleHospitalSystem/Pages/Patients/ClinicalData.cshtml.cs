@@ -29,7 +29,7 @@ namespace SimpleHospitalSystem.Pages.Patients
                 return NotFound();
             }
 
-            var patient = await repository.GetPatientDetailsAsync(patientId.Value);
+            var patient = await repository.GetPatientAsync(patientId.Value);
             if (patient == null)
             {
                 return NotFound();

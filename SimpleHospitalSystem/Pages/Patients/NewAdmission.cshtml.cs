@@ -31,18 +31,30 @@ namespace SimpleHospitalSystem.Pages.Patients
         [MaxLength(32)]
         [BindProperty]
         public string BedNumber { get; set; }
-        public async Task OnGetAsync(long Id)
+        public async Task<IActionResult> OnGetAsync(long Id)
         {
+            if (await repository.GetPatientAsync(Id) == null)
+            {
+                return NotFound();
+            }
             PatientId = Id;
             Departments = await repository.GetDepartmentsAsync();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (ModelState.IsValid)
             {
-                await repository.NewAdmissionAsync(PatientId.Value, SelectedDepartmentId.Value, BedNumber, RoomNumber);
-                return RedirectToPage("Patient", new { Id = PatientId });
+                var result = await repository.NewAdmissionAsync(PatientId.Value, SelectedDepartmentId.Value, BedNumber, RoomNumber);
+                if (result == false)
+                {
+                    ModelState.AddModelError("SelectedDepartmentId", "The selected department is full");
+                }
+                else
+                {
+                    return RedirectToPage("Patient", new { Id = PatientId });
+                }
             }
             Departments = await repository.GetDepartmentsAsync();
             return Page();
