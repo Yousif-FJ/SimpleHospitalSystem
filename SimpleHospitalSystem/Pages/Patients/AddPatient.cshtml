@@ -4,7 +4,7 @@
     ViewData["Title"] = "NewPatient";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-@if (Model.Patient == null)
+@if (Model.EditMode == false)
 {
     <h1>Add patient</h1>
 }
@@ -25,14 +25,16 @@ else
         <input class="form-control" asp-for="Patient.Age" />
         <span class="text-danger" asp-validation-for="Patient.Age"></span>
     </div>
-    <input hidden asp-for="Patient.Id"/>
-    <input hidden asp-for="Patient.BedId" />
-    @if (Model.Patient == null)
+
+    @if (Model.EditMode == false)
     {
         <button class="btn btn-primary" type="submit" asp-page-handler="Add" asp-page="AddPatient">Ok</button>
     }
     else
     {
+        <input hidden asp-for="EditMode"/>
+        <input hidden asp-for="Patient.Id" />
+        <input hidden asp-for="Patient.BedId" />
         <button class="btn btn-primary" type="submit" asp-page-handler="Update" asp-page="AddPatient">Ok</button>
     }
 </form>

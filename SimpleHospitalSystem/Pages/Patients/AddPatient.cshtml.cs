@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -17,14 +18,17 @@ namespace SimpleHospitalSystem.Pages.Patients
         {
             this.repository = repository;
         }
-
+        [Required]
         [BindProperty]
         public Patient Patient { get; set; }
+        [BindProperty]
+        public bool EditMode { get; set; }
 
         public async Task<IActionResult> OnGetAsync(long? id = null)
         {
             if (id == null)
             {
+                EditMode = false;
                 return Page();
             }
             var patient = await repository.GetPatientAsync(id.Value);
@@ -33,6 +37,7 @@ namespace SimpleHospitalSystem.Pages.Patients
                 return NotFound();
             }
             Patient = patient;
+            EditMode = true;
             return Page();
         }
 
@@ -40,8 +45,8 @@ namespace SimpleHospitalSystem.Pages.Patients
         {
             if (ModelState.IsValid)
             {
-                await repository.AddPatientAsync(Patient);
-                return RedirectToPage("Patient", new { Patient.Id });
+                var patient = await repository.AddPatientAsync(Patient);
+                return RedirectToPage("Patient", new { patient.Id });
             }
             return Page();
         }
