@@ -2,11 +2,10 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SimpleHospitalModel.DBModel;
 
-namespace SimpleHospitalModel.Migrations
+namespace SimpleHospitalSystem.Migrations
 {
     [DbContext(typeof(HospitalContext))]
     partial class HospitalContextModelSnapshot : ModelSnapshot
@@ -15,26 +14,23 @@ namespace SimpleHospitalModel.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.5")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "3.1.6");
 
             modelBuilder.Entity("SimpleHospitalModel.DBModel.Bed", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("BedNumber")
-                        .HasColumnType("nvarchar(32)")
+                        .HasColumnType("TEXT")
                         .HasMaxLength(32);
 
                     b.Property<long>("DepartmentId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("RoomNumber")
-                        .HasColumnType("nvarchar(32)")
+                        .HasColumnType("TEXT")
                         .HasMaxLength(32);
 
                     b.HasKey("Id");
@@ -48,26 +44,25 @@ namespace SimpleHospitalModel.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("ChiefComplaint")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("TEXT")
                         .HasMaxLength(10000);
 
                     b.Property<DateTime>("DateTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Diagnosis")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("TEXT")
                         .HasMaxLength(10000);
 
                     b.Property<string>("History")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("TEXT")
                         .HasMaxLength(10000);
 
                     b.Property<long>("PatientId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -80,11 +75,10 @@ namespace SimpleHospitalModel.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(64)")
+                        .HasColumnType("TEXT")
                         .HasMaxLength(64);
 
                     b.HasKey("Id");
@@ -96,25 +90,23 @@ namespace SimpleHospitalModel.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Age")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<long?>("BedId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(64)")
+                        .HasColumnType("TEXT")
                         .HasMaxLength(64);
 
                     b.HasKey("Id");
 
                     b.HasIndex("BedId")
-                        .IsUnique()
-                        .HasFilter("[BedId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Patient");
                 });

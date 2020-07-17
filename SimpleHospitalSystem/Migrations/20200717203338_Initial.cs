@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace SimpleHospitalModel.Migrations
+namespace SimpleHospitalSystem.Migrations
 {
     public partial class Initial : Migration
     {
@@ -12,7 +12,7 @@ namespace SimpleHospitalModel.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(maxLength: 64, nullable: true)
                 },
                 constraints: table =>
@@ -25,7 +25,7 @@ namespace SimpleHospitalModel.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Sqlite:Autoincrement", true),
                     RoomNumber = table.Column<string>(maxLength: 32, nullable: true),
                     BedNumber = table.Column<string>(maxLength: 32, nullable: true),
                     DepartmentId = table.Column<long>(nullable: false)
@@ -46,7 +46,7 @@ namespace SimpleHospitalModel.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(maxLength: 64, nullable: false),
                     Age = table.Column<int>(nullable: false),
                     BedId = table.Column<long>(nullable: true)
@@ -67,7 +67,7 @@ namespace SimpleHospitalModel.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Sqlite:Autoincrement", true),
                     DateTime = table.Column<DateTime>(nullable: false),
                     ChiefComplaint = table.Column<string>(maxLength: 10000, nullable: true),
                     History = table.Column<string>(maxLength: 10000, nullable: true),
@@ -99,8 +99,7 @@ namespace SimpleHospitalModel.Migrations
                 name: "IX_Patient_BedId",
                 table: "Patient",
                 column: "BedId",
-                unique: true,
-                filter: "[BedId] IS NOT NULL");
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

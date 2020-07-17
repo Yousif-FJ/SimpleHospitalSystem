@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,7 +28,11 @@ namespace SimpleHospitalSystem
         {
             services.AddRazorPages();
             services.AddDbContextPool<HospitalContext>(options =>
-              options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+              options.UseSqlite("Filename=HospitalLite.db", options =>
+              {
+                  options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
+              }));
+
             services.AddScoped<IHospitalRepository, DBRepository>();
         }
 
