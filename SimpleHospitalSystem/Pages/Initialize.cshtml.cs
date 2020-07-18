@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using SimpleHospitalModel.HospitalRepository;
+using SimpleHospitalSystem.CustomValidationAttribut;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using SimpleHospitalModel.HospitalRepository;
-using SimpleHospitalSystem.CustomValidationAttribut;
 
 namespace SimpleHospitalSystem.Pages
 {
@@ -39,7 +39,7 @@ namespace SimpleHospitalSystem.Pages
 
         public IActionResult OnPostContinueAsync()
         {
-                return Page();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostInitializeAsync()
