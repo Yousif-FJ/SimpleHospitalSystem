@@ -26,7 +26,6 @@ namespace SimpleHospitalSystem.Pages
 
         public async Task<IActionResult> OnGetAsync(string searchTerm = null)
         {
-            throw new Exception();
             if (!await repository.IsInitializedAsync())
             {
                 return RedirectToPage(pageName: "Initialize");
